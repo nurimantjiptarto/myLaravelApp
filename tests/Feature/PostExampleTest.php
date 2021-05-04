@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,10 +16,18 @@ class PostExampleTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_examplePost()
     {
-        $response = $this->get('/');
+//Creating 1 Task and one user to associate with that task.
+        $post = Post::factory()->create();
+        $post->title = "Example Post";
+        $post->save();
+        //$user = $task->user;
+        $user = User::find(1);
+        $user->name = "Nuri Tjiptarto";
+        $user->save();
+        $this->assertEquals("Nuri Tjiptarto",$user->name);
+        $posts= $user->posts;
 
-        $response->assertStatus(200);
     }
 }

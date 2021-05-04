@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,10 +15,19 @@ class TaskExampleTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_taskCreate()
     {
-        $response = $this->get('/');
+        //Creating 1 Task and one user to associate with that task.
+        $task = Task::factory()->create();
+        $task->description = "Example Task";
+        $task->save();
+        //$user = $task->user;
+        $user = User::find(1);
+        $user->name = "Nuri Tjiptarto";
+        $user->save();
+        $tasks= $user->tasks;
+        //$task = $tasks;
+        dd($task);
 
-        $response->assertStatus(200);
     }
 }
